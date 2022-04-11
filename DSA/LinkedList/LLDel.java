@@ -1,4 +1,6 @@
-public class LLAdv {
+import java.io.PushbackInputStream;
+
+public class LLDel {
     int size = 0;
     Node head;
 
@@ -41,43 +43,49 @@ public class LLAdv {
         return size;
     }
 
-    ////////////////// Advanced /////////////////////
-    public void addFirst(int data) {
-        Node newNode = new Node(data);
-        size++;
-        if (head == null) {
-            head = newNode;
+    public void delLast() {
+        Node curNode = head;
+        size--;
+        if (head.next == null) {
+            head = null;
             return;
         }
-        Node currentNode = head;
-        head = newNode;
-        head.next = currentNode;
+        for (int i = 0; i < size - 1; i++) {
+            curNode = curNode.next;
+        }
+        curNode.next = null;
+
     }
 
-    public void addIndex(int data, int index) {
-        if (index > size || index < 0) {
-            System.out.println("Invalid index");
-            return;
-        }
-        size++;
-        Node newNode = new Node(data);
-        Node currentNode = head;
+    public void delFirst() {
+        size--;
+        Node curNode = head;
+        head = head.next;
+        curNode.next = null;
+    }
+
+    public void delIndex(int index) {
+        size--;
+        Node curNode = head;
+        Node nextNode = curNode.next;
         for (int i = 0; i < index - 1; i++) {
-            currentNode = currentNode.next;
+            curNode = curNode.next;
+            nextNode = nextNode.next;
         }
-        newNode.next = currentNode.next;
-        currentNode.next = newNode;
+        curNode.next = nextNode.next;
+        nextNode.next = null;
     }
 
     public static void main(String[] args) {
-        LLAdv linkedList = new LLAdv();
+        LLDel linkedList = new LLDel();
         linkedList.addLast(1);
+        linkedList.addLast(2);
         linkedList.addLast(3);
         linkedList.addLast(4);
         linkedList.addLast(5);
-        linkedList.addFirst(0);
-        linkedList.addIndex(2, 2);
-        linkedList.addIndex(6, 6);
+        linkedList.delLast();
+        linkedList.delFirst();
+        linkedList.delIndex(1);
         linkedList.printList();
     }
 }
