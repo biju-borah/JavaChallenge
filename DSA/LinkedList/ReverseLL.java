@@ -1,4 +1,4 @@
-public class LLDel {
+public class ReverseLL {
     int size = 0;
     Node head;
 
@@ -41,49 +41,31 @@ public class LLDel {
         return size;
     }
 
-    public void delLast() {
-        Node curNode = head;
-        size--;
-        if (head.next == null) {
-            head = null;
-            return;
-        }
-        for (int i = 0; i < size - 1; i++) {
-            curNode = curNode.next;
-        }
-        curNode.next = null;
-
-    }
-
-    public void delFirst() {
-        size--;
-        Node curNode = head;
-        head = head.next;
-        curNode.next = null;
-    }
-
-    public void delIndex(int index) {
-        size--;
+    public void reverse() {
         Node curNode = head;
         Node nextNode = curNode.next;
-        for (int i = 0; i < index - 1; i++) {
-            curNode = curNode.next;
+        Node preNode = null;
+        while (true) {
+            curNode.next = preNode;
+            preNode = curNode;
+            curNode = nextNode;
+            if (curNode == null) {
+
+                break;
+            }
             nextNode = nextNode.next;
         }
-        curNode.next = nextNode.next;
-        nextNode.next = null;
+        head = preNode;
     }
 
     public static void main(String[] args) {
-        LLDel linkedList = new LLDel();
+        ReverseLL linkedList = new ReverseLL();
         linkedList.addLast(1);
         linkedList.addLast(2);
         linkedList.addLast(3);
         linkedList.addLast(4);
         linkedList.addLast(5);
-        linkedList.delLast();
-        linkedList.delFirst();
-        linkedList.delIndex(1);
+        linkedList.reverse();
         linkedList.printList();
     }
 }
